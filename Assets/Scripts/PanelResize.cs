@@ -6,10 +6,16 @@ using UnityEngine.UI;
 
 public class PanelResize : MonoBehaviour, IDragHandler
 {
-    static float MinSize = 256f;
+    static float MinSize = 128f;
 
     public RectTransform panel;
-    public RectTransform canvasRect;
+
+    RectTransform canvasRect;
+
+    void Awake()
+    {
+        canvasRect = GameObject.FindGameObjectWithTag("Canvas").transform as RectTransform;
+    }
 
     public void OnDrag(PointerEventData eventData)
     {

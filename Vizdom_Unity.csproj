@@ -84,6 +84,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Vizdom_Unity.Plugins.csproj">
+      <Project>{3BA7235A-C8A3-2C00-3E2A-E64E4C2C63DB}</Project>
+      <Name>Vizdom_Unity.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Demo\Scripts\ActiveStateToggler.cs" />
     <Compile Include="Assets\Demo\Scripts\ApplicationManager.cs" />
     <Compile Include="Assets\Demo\Scripts\ChangeColor.cs" />
@@ -96,8 +102,11 @@
     <Compile Include="Assets\Demo\Scripts\ShowSliderValue.cs" />
     <Compile Include="Assets\Demo\Scripts\TiltWindow.cs" />
     <Compile Include="Assets\Scripts\Client.cs" />
-    <Compile Include="Assets\Scripts\PanelDrag.cs" />
-    <Compile Include="Assets\Scripts\PanelFollow.cs" />
+    <Compile Include="Assets\Scripts\CollapseMenu.cs" />
+    <Compile Include="Assets\Scripts\DataMenuItem.cs" />
+    <Compile Include="Assets\Scripts\Draggable.cs" />
+    <Compile Include="Assets\Scripts\MenuItem.cs" />
+    <Compile Include="Assets\Scripts\Panel.cs" />
     <Compile Include="Assets\Scripts\PanelResize.cs" />
     <Compile Include="Assets\Scripts\Panning.cs" />
   </ItemGroup>

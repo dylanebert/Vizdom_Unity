@@ -2,16 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using SimpleJSON;
 
 public class Client : MonoBehaviour {
 
-    CountryData[] data;
+    public CollapseMenu menu;
+
+    Dictionary<string, Dictionary<string, string>> data;
+    List<string> attributes;
 
     IEnumerator Start()
     {
         yield return StartCoroutine(GetData());
-        Debug.Log(data[0]);
-        Debug.Log(data[46]);
+        PopulateMenu();
+    }
+
+    void PopulateMenu()
+    {
+        foreach (string attribute in attributes)
+        {
+            menu.AddDataMenuItem(attribute);
+        }
     }
 
     IEnumerator GetData()
@@ -23,37 +34,24 @@ public class Client : MonoBehaviour {
             Debug.Log(www.error);
         else
         {
-            List<CountryData> countryData = new List<CountryData>();
+            data = new Dictionary<string, Dictionary<string, string>>();
+            attributes = new List<string>();
             string json = www.downloadHandler.text;
             string[] json_split = json.Split('\n');
             foreach(string s in json_split)
             {
-                CountryData cd = new CountryData().createFromJSON(s);
-                if(cd != null)
-                    countryData.Add(cd);
+                JSONObject jsonObj = JSON.Parse(s).AsObject;
+                Dictionary<string, string> entries = new Dictionary<string, string>();
+                foreach(string key in jsonObj.Keys)
+                {
+                    if(!attributes.Contains(key))
+                    {
+                        attributes.Add(key);
+                    }
+                    entries.Add(key, jsonObj[key]);
+                }
+                data.Add(jsonObj[0], entries);
             }
-            data = countryData.ToArray();
         }
-    }
-}
-
-[System.Serializable]
-public class CountryData
-{
-    public string _id;
-    public float agr;
-    public float gdp;
-    public float gpp;
-    public int pop;
-    public float co2pp;
-
-    public CountryData createFromJSON(string json)
-    {
-        return JsonUtility.FromJson<CountryData>(json);
-    }
-
-    public override string ToString()
-    {
-        return "_id: " + _id + ", agr: " + agr + ", gdp: " + gdp + ", gpp: " + gpp + ", pop: " + pop + ", co2pp: " + co2pp;
     }
 }
