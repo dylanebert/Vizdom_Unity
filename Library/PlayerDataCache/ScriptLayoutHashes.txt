@@ -117,6 +117,7 @@ bb94988c9bd05832c0f9b25d566f3f57 Assembly-CSharp.dll:.Panning
 847108a4f4300c8402f74cce11a88a67 Assembly-CSharp.dll:.DropMe
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ShowSliderValue
 40009ed306396515b9535fd41531683a Assembly-CSharp.dll:.Client
+76119242f799591c84bce8d3be04eee2 Assembly-CSharp.dll:.DataMenuItem
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 60b2bb652410a5867a5ab9a01cd38461 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery
@@ -141,10 +142,10 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 463516d5b5fe8e67a0a24c48f2095b04 UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInputModule
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingRenderer
+1f6669d6214e449b1638d0989ebef081 Assembly-CSharp.dll:.Panel
+90a138096b3955bfc3fafc0c9070ef5c Assembly-CSharp.dll:.CollapseMenu
 5465eae51985f0cb194548215d2133ec Assembly-CSharp.dll:.ScrollDetailTexture
+76119242f799591c84bce8d3be04eee2 Assembly-CSharp.dll:.MenuItem
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ApplicationManager
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ChangeColor
-90a138096b3955bfc3fafc0c9070ef5c Assembly-CSharp.dll:.CollapseMenu
-76119242f799591c84bce8d3be04eee2 Assembly-CSharp.dll:.MenuItem
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Panel
-76119242f799591c84bce8d3be04eee2 Assembly-CSharp.dll:.DataMenuItem
+1f6669d6214e449b1638d0989ebef081 Assembly-CSharp.dll:.DeepLearningPanel

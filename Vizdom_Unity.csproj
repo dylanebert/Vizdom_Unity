@@ -104,11 +104,13 @@
     <Compile Include="Assets\Scripts\Client.cs" />
     <Compile Include="Assets\Scripts\CollapseMenu.cs" />
     <Compile Include="Assets\Scripts\DataMenuItem.cs" />
+    <Compile Include="Assets\Scripts\DeepLearningPanel.cs" />
     <Compile Include="Assets\Scripts\Draggable.cs" />
     <Compile Include="Assets\Scripts\MenuItem.cs" />
     <Compile Include="Assets\Scripts\Panel.cs" />
     <Compile Include="Assets\Scripts\PanelResize.cs" />
     <Compile Include="Assets\Scripts\Panning.cs" />
+    <Compile Include="Assets\Scripts\PointerOverUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Demo\Fonts\Jupiter\LICENSE.txt" />

@@ -9,21 +9,30 @@ public class MenuItem : MonoBehaviour, IEndDragHandler, IDragHandler, IBeginDrag
 
     public GameObject target;
 
+    protected Client client;
+
     MenuItem ghost;
     Vector2 dragStartPos;
     bool isGhost;
+    bool preventDrop;
 
-    public void OnBeginDrag(PointerEventData eventData)
+    void Awake()
+    {
+        client = GameObject.FindGameObjectWithTag("Client").GetComponent<Client>();
+    }
+
+    public virtual void OnBeginDrag(PointerEventData eventData)
     {
         if (ghost == null && !isGhost)
         {
             ghost = Instantiate(this.gameObject, transform.position, transform.rotation, GameObject.FindGameObjectWithTag("Canvas").transform).GetComponent<MenuItem>();
             ghost.SetAsGhost(eventData);
             dragStartPos = eventData.position;
+            ghost.GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public virtual void OnDrag(PointerEventData eventData)
     {
         if (ghost != null && !isGhost)
         {
@@ -31,11 +40,11 @@ public class MenuItem : MonoBehaviour, IEndDragHandler, IDragHandler, IBeginDrag
         }
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public virtual void OnEndDrag(PointerEventData eventData)
     {
         if (ghost != null && !isGhost)
         {
-            if ((eventData.position - dragStartPos).magnitude > MinDragDist)
+            if ((eventData.position - dragStartPos).magnitude > MinDragDist && !ghost.preventDrop)
             {
                 GameObject panel = Instantiate(target, eventData.position, Quaternion.identity, GameObject.FindGameObjectWithTag("Container").transform);
                 EventSystem.current.SetSelectedGameObject(panel);
@@ -49,5 +58,11 @@ public class MenuItem : MonoBehaviour, IEndDragHandler, IDragHandler, IBeginDrag
     {
         isGhost = true;
         GetComponent<CanvasGroup>().alpha = .5f;
+    }
+
+    public void PreventDrop(bool prevent)
+    {
+        if (ghost != null)
+            ghost.preventDrop = prevent;
     }
 }

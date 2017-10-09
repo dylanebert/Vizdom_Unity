@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DataMenuItem : MenuItem {
@@ -14,7 +15,7 @@ public class DataMenuItem : MenuItem {
         GetComponentInChildren<Text>().text = attribute;
     }
 
-    public string GetName()
+    public string GetAttribute()
     {
         return attribute;
     }

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Canvas
   - Container
+  - Client
+  - Background
   layers:
   - Default
   - TransparentFX

@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using SimpleJSON;
+using System.Linq;
 
 public class Client : MonoBehaviour {
 
     public CollapseMenu menu;
 
-    Dictionary<string, Dictionary<string, string>> data;
     List<string> attributes;
 
     IEnumerator Start()
     {
-        yield return StartCoroutine(GetData());
+        yield return StartCoroutine(GetAttributes());
         PopulateMenu();
     }
 
@@ -25,7 +25,7 @@ public class Client : MonoBehaviour {
         }
     }
 
-    IEnumerator GetData()
+    IEnumerator GetAttributes()
     {
         UnityWebRequest www = UnityWebRequest.Get("http://127.0.0.1:5000/data_raw");
         yield return www.Send();
@@ -34,23 +34,19 @@ public class Client : MonoBehaviour {
             Debug.Log(www.error);
         else
         {
-            data = new Dictionary<string, Dictionary<string, string>>();
             attributes = new List<string>();
             string json = www.downloadHandler.text;
             string[] json_split = json.Split('\n');
             foreach(string s in json_split)
             {
                 JSONObject jsonObj = JSON.Parse(s).AsObject;
-                Dictionary<string, string> entries = new Dictionary<string, string>();
                 foreach(string key in jsonObj.Keys)
                 {
                     if(!attributes.Contains(key))
                     {
                         attributes.Add(key);
                     }
-                    entries.Add(key, jsonObj[key]);
                 }
-                data.Add(jsonObj[0], entries);
             }
         }
     }
