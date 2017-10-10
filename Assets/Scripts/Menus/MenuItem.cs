@@ -26,7 +26,7 @@ public class MenuItem : MonoBehaviour, IEndDragHandler, IDragHandler, IBeginDrag
         if (ghost == null && !isGhost)
         {
             ghost = Instantiate(this.gameObject, transform.position, transform.rotation, GameObject.FindGameObjectWithTag("Canvas").transform).GetComponent<MenuItem>();
-            ghost.SetAsGhost(eventData);
+            ghost.SetGhost(eventData);
             dragStartPos = eventData.position;
             ghost.GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
@@ -54,7 +54,7 @@ public class MenuItem : MonoBehaviour, IEndDragHandler, IDragHandler, IBeginDrag
         }
     }
 
-    public void SetAsGhost(PointerEventData eventData)
+    public void SetGhost(PointerEventData eventData)
     {
         isGhost = true;
         GetComponent<CanvasGroup>().alpha = .5f;
