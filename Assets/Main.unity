@@ -464,6 +464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1134225550320416, guid: cf8db1dad44df654c8457f59e22c873f, type: 2}
+  preventDrop: 0
 --- !u!225 &468739959
 CanvasGroup:
   m_ObjectHideFlags: 0

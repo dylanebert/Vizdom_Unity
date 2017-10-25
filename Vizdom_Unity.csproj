@@ -76,6 +76,12 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Vizdom_Unity.Plugins.csproj">
@@ -99,12 +105,13 @@
     <Compile Include="Assets\Scripts\Menus\CollapseMenu.cs" />
     <Compile Include="Assets\Scripts\Menus\DataMenuItem.cs" />
     <Compile Include="Assets\Scripts\Menus\MenuItem.cs" />
+    <Compile Include="Assets\Scripts\Panels\AttrPanel.cs" />
     <Compile Include="Assets\Scripts\Panels\DeepLearningPanel.cs" />
-    <Compile Include="Assets\Scripts\Panels\Draggable.cs" />
     <Compile Include="Assets\Scripts\Panels\Panel.cs" />
-    <Compile Include="Assets\Scripts\Panels\PanelResize.cs" />
-    <Compile Include="Assets\Scripts\Panels\Panning.cs" />
-    <Compile Include="Assets\Scripts\Util\PointerOverUtility.cs" />
+    <Compile Include="Assets\Scripts\Panels\Subpanel.cs" />
+    <Compile Include="Assets\Scripts\Util\Draggable.cs" />
+    <Compile Include="Assets\Scripts\Util\PanelResize.cs" />
+    <Compile Include="Assets\Scripts\Util\Panning.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Demo\Fonts\Jupiter\LICENSE.txt" />

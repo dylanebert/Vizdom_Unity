@@ -5,16 +5,17 @@ using UnityEngine.EventSystems;
 
 public class MenuItem : MonoBehaviour, IEndDragHandler, IDragHandler, IBeginDragHandler
 {
-    static float MinDragDist = 48f;
+    protected static float MinDragDist = 48f;
 
     public GameObject target;
 
-    protected Client client;
+    [HideInInspector]
+    public bool preventDrop;
 
-    MenuItem ghost;
-    Vector2 dragStartPos;
-    bool isGhost;
-    bool preventDrop;
+    protected Client client;
+    protected MenuItem ghost;
+    protected Vector2 dragStartPos;
+    protected bool isGhost;
 
     void Awake()
     {

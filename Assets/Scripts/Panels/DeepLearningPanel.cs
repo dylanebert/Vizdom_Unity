@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
+/*Parent panel for deep learning
+ * Functionality embedded in subpanels*/
 public class DeepLearningPanel : Panel, IPointerEnterHandler, IPointerExitHandler, IDropHandler
 {
+    static Vector2 FullSize = new Vector2(768, 384);
+
     DataMenuItem itemOver;
 
     public void OnDrop(PointerEventData eventData)
@@ -12,7 +17,7 @@ public class DeepLearningPanel : Panel, IPointerEnterHandler, IPointerExitHandle
         if (itemOver == null)
             return;
 
-        Debug.Log(itemOver.GetAttribute());
+        StartCoroutine(InitializeOnAttribute(itemOver.GetAttribute()));
 
         EventSystem.current.SetSelectedGameObject(this.gameObject);
         Unhighlight();
@@ -41,5 +46,12 @@ public class DeepLearningPanel : Panel, IPointerEnterHandler, IPointerExitHandle
             itemOver.PreventDrop(false);
             itemOver = null;
         }
+    }
+
+    IEnumerator InitializeOnAttribute(string attribute)
+    {
+        centerText.enabled = false;
+        yield return StartCoroutine(AnimatedResize(FullSize, .25f));
+        yield return StartCoroutine(GameObject.FindGameObjectWithTag("Background").GetComponent<Panning>().PanToPanel(rect, .25f));
     }
 }

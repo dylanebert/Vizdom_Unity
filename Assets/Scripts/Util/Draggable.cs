@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+//Allows item to be dragged by pointer
 public class Draggable : MonoBehaviour, IDragHandler
 {
     public RectTransform target;

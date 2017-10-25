@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using SimpleJSON;
 using System.Linq;
 
+/*Communicates with server (IDEA)*/
 public class Client : MonoBehaviour {
 
     public CollapseMenu menu;
@@ -17,6 +18,7 @@ public class Client : MonoBehaviour {
         PopulateMenu();
     }
 
+    //Populate side menu with attributes from server
     void PopulateMenu()
     {
         foreach (string attribute in attributes)
@@ -25,6 +27,7 @@ public class Client : MonoBehaviour {
         }
     }
 
+    //Request list of attributes from server
     IEnumerator GetAttributes()
     {
         UnityWebRequest www = UnityWebRequest.Get("http://127.0.0.1:5000/data_raw");

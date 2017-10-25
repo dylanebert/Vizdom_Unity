@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/*Allows attachee to be dragged to resize the target RectTransform*/
 public class PanelResize : MonoBehaviour, IDragHandler
 {
     static float MinSize = 128f;
