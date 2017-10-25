@@ -239,6 +239,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overlay: {fileID: 1264879372745000}
   centerText: {fileID: 114587195218216120}
+  resizeButton: {fileID: 1549533210864398}
+  main: {fileID: 224135451936945332}
+  subpanels:
+  - {fileID: 1930195225131792, guid: 2bf8e799fb14e174fb364df62e85bbc9, type: 2}
+  - {fileID: 1930195225131792, guid: 081fdd7d51a16934ba7e3d797745570d, type: 2}
+  - {fileID: 1930195225131792, guid: 9896b3dc9b8195649a815ec0bcecfa91, type: 2}
+  - {fileID: 1930195225131792, guid: ea456321f8abeb247a177804d51cebde, type: 2}
 --- !u!114 &114774024666393386
 MonoBehaviour:
   m_ObjectHideFlags: 1

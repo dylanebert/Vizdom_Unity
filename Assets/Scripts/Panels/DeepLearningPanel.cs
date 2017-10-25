@@ -10,11 +10,14 @@ public class DeepLearningPanel : Panel, IPointerEnterHandler, IPointerExitHandle
 {
     static Vector2 FullSize = new Vector2(768, 384);
 
+    public GameObject[] subpanels;
+
     DataMenuItem itemOver;
+    bool initialized;
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (itemOver == null)
+        if (initialized || itemOver == null)
             return;
 
         StartCoroutine(InitializeOnAttribute(itemOver.GetAttribute()));
@@ -33,14 +36,17 @@ public class DeepLearningPanel : Panel, IPointerEnterHandler, IPointerExitHandle
         if (dataMenuItem == null)
             return;
 
-        Highlight();
         itemOver = dataMenuItem;
         itemOver.PreventDrop(true);
+        if(!initialized)
+            Highlight();
     }
 
     public void OnPointerExit(PointerEventData eventData)
-    { 
-        Unhighlight();
+    {
+        if(!initialized)
+            Unhighlight();
+
         if (itemOver != null)
         {
             itemOver.PreventDrop(false);
@@ -50,8 +56,19 @@ public class DeepLearningPanel : Panel, IPointerEnterHandler, IPointerExitHandle
 
     IEnumerator InitializeOnAttribute(string attribute)
     {
+        initialized = true;
         centerText.enabled = false;
+        resizeButton.SetActive(false);
         yield return StartCoroutine(AnimatedResize(FullSize, .25f));
         yield return StartCoroutine(GameObject.FindGameObjectWithTag("Background").GetComponent<Panning>().PanToPanel(rect, .25f));
+        InitializeSubpanels();
+    }
+
+    void InitializeSubpanels()
+    {
+        foreach(GameObject subpanel in subpanels)
+        {
+            Instantiate(subpanel, main);
+        }
     }
 }

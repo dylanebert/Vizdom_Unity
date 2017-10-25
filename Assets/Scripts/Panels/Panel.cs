@@ -10,6 +10,8 @@ public class Panel : MonoBehaviour, ISelectHandler
 {
     public GameObject overlay;
     public Text centerText;
+    public GameObject resizeButton;
+    public RectTransform main;
 
     protected RectTransform rect;
 
