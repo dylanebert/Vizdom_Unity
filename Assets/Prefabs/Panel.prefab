@@ -302,6 +302,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   overlay: {fileID: 1795675199568308}
   centerText: {fileID: 114560783234321184}
+  resizeButton: {fileID: 1549533210864398}
+  main: {fileID: 224135451936945332}
 --- !u!114 &114909642000845766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -354,8 +356,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 224634027055430060}
   - {fileID: 224762562681330114}
+  - {fileID: 224634027055430060}
   m_Father: {fileID: 224708523014707692}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -393,7 +395,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224135451936945332}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -431,7 +433,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224135451936945332}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

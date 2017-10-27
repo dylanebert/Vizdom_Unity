@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 164179314}
   - component: {fileID: 164179316}
   - component: {fileID: 164179315}
+  - component: {fileID: 164179317}
   m_Layer: 5
   m_Name: Background
   m_TagString: Background
@@ -325,6 +326,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 164179312}
+--- !u!114 &164179317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 164179312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0947b1be1fdaadf48a6b9c61f74f8e6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoomSpeed: 0.002
+  container: {fileID: 700242342}
 --- !u!1 &205767743
 GameObject:
   m_ObjectHideFlags: 0

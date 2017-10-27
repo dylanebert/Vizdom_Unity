@@ -19,7 +19,8 @@ public class Panning : MonoBehaviour, IDragHandler {
 
     public void OnDrag(PointerEventData data)
     {        
-        container.Translate(data.delta);
+        if(Input.touchCount == 1)
+            container.Translate(data.delta);
     }
 
     public IEnumerator PanToPanel(RectTransform panel, float time)

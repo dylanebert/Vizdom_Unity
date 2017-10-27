@@ -106,6 +106,7 @@
     <Compile Include="Assets\Scripts\Util\Draggable.cs" />
     <Compile Include="Assets\Scripts\Util\PanelResize.cs" />
     <Compile Include="Assets\Scripts\Util\Panning.cs" />
+    <Compile Include="Assets\Scripts\Util\Zoom.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Demo\Fonts\Jupiter\LICENSE.txt" />
