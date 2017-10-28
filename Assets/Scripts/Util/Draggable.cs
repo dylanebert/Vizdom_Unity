@@ -10,7 +10,7 @@ public class Draggable : MonoBehaviour, IDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(Input.touchCount == 1)
+        if(Input.touchCount <= 1)
             target.Translate(eventData.delta);
     }
 }

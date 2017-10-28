@@ -19,7 +19,7 @@ public class Panning : MonoBehaviour, IDragHandler {
 
     public void OnDrag(PointerEventData data)
     {        
-        if(Input.touchCount == 1)
+        if(Input.touchCount <= 1)
             container.Translate(data.delta);
     }
 

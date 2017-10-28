@@ -20,7 +20,7 @@ public class PanelResize : MonoBehaviour, IDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(Input.touchCount == 1)
+        if(Input.touchCount <= 1)
             panel.sizeDelta = new Vector2(Mathf.Max(MinSize, panel.sizeDelta.x + eventData.delta.x / canvasRect.localScale.x), Mathf.Max(MinSize, panel.sizeDelta.y - eventData.delta.y / canvasRect.localScale.y));
     }
 }

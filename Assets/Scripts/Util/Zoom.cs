@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Zoom : MonoBehaviour {
 
-    public float zoomSpeed = .01f;
+    static float pinchZoomSpeed = .002f;
+    static float scrollZoomSpeed = 1f;
 
     public RectTransform container;
 
@@ -23,7 +24,14 @@ public class Zoom : MonoBehaviour {
 
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
-            container.localScale -= Vector3.one * deltaMagnitudeDiff * zoomSpeed;
+            container.localScale -= Vector3.one * deltaMagnitudeDiff * pinchZoomSpeed;
+            container.localScale = Vector3.Max(container.localScale, Vector3.one * .1f);
+        }
+
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if(scroll != 0)
+        {
+            container.localScale += Vector3.one * scroll * scrollZoomSpeed;
             container.localScale = Vector3.Max(container.localScale, Vector3.one * .1f);
         }
     }
