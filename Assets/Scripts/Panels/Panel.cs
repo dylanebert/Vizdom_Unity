@@ -6,33 +6,22 @@ using UnityEngine.UI;
 
 /*Parent class for all panels
  * Includes high level manipulations like highlight and selection*/
+ [RequireComponent(typeof(Selectable))]
 public class Panel : MonoBehaviour, ISelectHandler
 {
-    public GameObject overlay;
     public Text centerText;
-    public GameObject resizeButton;
     public RectTransform main;
 
     protected RectTransform rect;
 
-    void Awake()
+    public virtual void Awake()
     {
         rect = transform as RectTransform;
     }
 
-    void Start()
+    public virtual void Start()
     {
         rect.anchoredPosition += new Vector2(-rect.rect.width / 2f, rect.rect.height / 2f);
-    }
-
-    public void Highlight()
-    {
-        overlay.SetActive(true);
-    }
-
-    public void Unhighlight()
-    {
-        overlay.SetActive(false);
     }
 
     public void OnSelect(BaseEventData eventData)
@@ -46,7 +35,7 @@ public class Panel : MonoBehaviour, ISelectHandler
     /// <param name="targetSize">The new size to set the panel to</param>
     /// <param name="time">Time taken to resize</param>
     /// <returns></returns>
-    protected IEnumerator AnimatedResize(Vector2 targetSize, float time)
+    public IEnumerator AnimatedResize(Vector2 targetSize, float time)
     {
         Vector2 startSize = rect.sizeDelta;
         float t = 0f;

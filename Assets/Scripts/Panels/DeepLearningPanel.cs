@@ -1,74 +1,47 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 /*Parent panel for deep learning
  * Functionality embedded in subpanels*/
-public class DeepLearningPanel : Panel, IPointerEnterHandler, IPointerExitHandler, IDropHandler
+[RequireComponent(typeof(Droppable))]
+public class DeepLearningPanel : Panel
 {
-    static Vector2 FullSize = new Vector2(768, 384);
+    static Vector2 FullSize = new Vector2(576, 384);
 
-    public GameObject[] subpanels;
+    public GameObject inputSubpanelObj;
+    public GameObject layersSubpanelObj;
+    public GameObject outputSubpanelObj;
+    public GameObject topSubpanelObj;
 
-    DataMenuItem itemOver;
-    bool initialized;
+    Droppable droppable;
 
-    public void OnDrop(PointerEventData eventData)
+    public override void Awake()
     {
-        if (initialized || itemOver == null)
-            return;
+        base.Awake();
+        droppable = GetComponent<Droppable>();
+        droppable.dropDelegate += OnDrop;
+    }
 
+    public void OnDrop(DataMenuItem itemOver)
+    {
         StartCoroutine(InitializeOnAttribute(itemOver.GetAttribute()));
-
-        EventSystem.current.SetSelectedGameObject(this.gameObject);
-        Unhighlight();
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    IEnumerator InitializeOnAttribute(string attr)
     {
-        var obj = eventData.pointerDrag;
-        if (obj == null)
-            return;
-
-        DataMenuItem dataMenuItem = obj.GetComponent<DataMenuItem>();
-        if (dataMenuItem == null)
-            return;
-
-        itemOver = dataMenuItem;
-        itemOver.PreventDrop(true);
-        if(!initialized)
-            Highlight();
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if(!initialized)
-            Unhighlight();
-
-        if (itemOver != null)
-        {
-            itemOver.PreventDrop(false);
-            itemOver = null;
-        }
-    }
-
-    IEnumerator InitializeOnAttribute(string attribute)
-    {
-        initialized = true;
+        droppable.enabled = false;
         centerText.enabled = false;
-        resizeButton.SetActive(false);
         yield return StartCoroutine(AnimatedResize(FullSize, .25f));
         yield return StartCoroutine(GameObject.FindGameObjectWithTag("Background").GetComponent<Panning>().PanToPanel(rect, .25f));
-        InitializeSubpanels();
+        InitializeSubpanels(attr);
     }
 
-    void InitializeSubpanels()
+    void InitializeSubpanels(string attr)
     {
-        foreach(GameObject subpanel in subpanels)
-        {
-            Instantiate(subpanel, main);
-        }
+        Instantiate(inputSubpanelObj, main);
+        Instantiate(layersSubpanelObj, main);
+        Instantiate(outputSubpanelObj, main).GetComponent<DeepLearningOutputSubpanel>().Initialize(attr);
+        Instantiate(topSubpanelObj, main);
     }
 }

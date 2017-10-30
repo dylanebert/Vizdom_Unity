@@ -44,7 +44,7 @@ public class CollapseMenu : MonoBehaviour, ISelectHandler, IDeselectHandler
     }
 
     IEnumerator Expand() {
-        childrenGroup.gameObject.SetActive(true);
+        childrenGroup.blocksRaycasts = true;
 
         Dictionary<RectTransform, Vector2> targetPositions = new Dictionary<RectTransform, Vector2>();
         for(int i = 0; i < children.Count; i++)
@@ -67,6 +67,8 @@ public class CollapseMenu : MonoBehaviour, ISelectHandler, IDeselectHandler
             childrenGroup.alpha = v;
             yield return null;
         }
+
+        childrenGroup.alpha = 1;
     }
 
     IEnumerator Collapse() {
@@ -89,6 +91,7 @@ public class CollapseMenu : MonoBehaviour, ISelectHandler, IDeselectHandler
             yield return null;
         }
 
-        childrenGroup.gameObject.SetActive(false);
+        childrenGroup.alpha = 0;
+        childrenGroup.blocksRaycasts = false;
     }
 }

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224732770413573922}
   - component: {fileID: 222628984728882080}
   - component: {fileID: 114357310461446618}
-  - component: {fileID: 114544505052904944}
+  - component: {fileID: 114743084771009618}
   m_Layer: 5
   m_Name: DeepLearningLayersSubpanel
   m_TagString: Untagged
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.39705884, g: 0.23648357, b: 0.23648357, a: 0.559}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -56,7 +56,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114544505052904944
+--- !u!114 &114743084771009618
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -64,9 +64,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1930195225131792}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53b4470c07de58f47991992178532671, type: 3}
+  m_Script: {fileID: 11500000, guid: c939bd74babdac843b3ab9839634f9c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hiddenLayerObj: {fileID: 1739808745220584, guid: 16e15031c36703447bfb3207f62594fe,
+    type: 2}
+  connectionObj: {fileID: 1305961016638294, guid: 24c198b346c315d42a89863e1dd2ba8e,
+    type: 2}
 --- !u!222 &222628984728882080
 CanvasRenderer:
   m_ObjectHideFlags: 1

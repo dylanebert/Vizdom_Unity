@@ -30,6 +30,7 @@ public class MenuItem : MonoBehaviour, IEndDragHandler, IDragHandler, IBeginDrag
             ghost.SetGhost(eventData);
             dragStartPos = eventData.position;
             ghost.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            EventSystem.current.SetSelectedGameObject(ghost.gameObject);
         }
     }
 
