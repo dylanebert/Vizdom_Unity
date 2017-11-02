@@ -8,6 +8,7 @@ public class HiddenLayer : MonoBehaviour, IPointerClickHandler
 {
     public Text title;
     public CanvasGroup options;
+    public GameObject deleteButton;
 
     DeepLearningLayersSubpanel panel;
     Grayout grayout;
@@ -27,14 +28,14 @@ public class HiddenLayer : MonoBehaviour, IPointerClickHandler
     
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(!focused)
-            StartCoroutine(ToggleFocus());
+        if (!focused)
+            StartCoroutine(Focus());
     }
 
     void ClickOut()
     {
         if (focused)
-            StartCoroutine(ToggleFocus());
+            StartCoroutine(Defocus());
     }
 
     public void Delete()
@@ -45,34 +46,40 @@ public class HiddenLayer : MonoBehaviour, IPointerClickHandler
     IEnumerator DeleteCoroutine()
     {
         if (!focused) yield break;
-        yield return StartCoroutine(ToggleFocus());
+        yield return StartCoroutine(Defocus());
         StartCoroutine(panel.RemoveHiddenLayer(this));
     }
 
-    IEnumerator ToggleFocus()
+    IEnumerator Focus()
     {
-        if (!focused)
-        {
-            focused = true;
-            rectUtil.MoveToForeground();
-            yield return StartCoroutine(grayout.Show());
-            yield return StartCoroutine(rectUtil.AnimatedResize(new Vector2(256, -256), .5f));
-            yield return StartCoroutine(ShowOptions(.5f));
-            grayout.ClickOut += ClickOut;
-        }
-        else
-        {
-            focused = false;
-            yield return StartCoroutine(HideOptions(.25f));
-            yield return StartCoroutine(rectUtil.AnimateToStartSize(.25f));
-            yield return StartCoroutine(grayout.Hide());
-            rectUtil.RestoreParent();
-            grayout.ClickOut -= ClickOut;
-        }
+        focused = true;
+        rectUtil.MoveToForeground();
+        yield return StartCoroutine(grayout.Show());
+        yield return StartCoroutine(rectUtil.AnimatedResize(new Vector2(256, -256), .5f));
+        yield return StartCoroutine(ShowOptions(.5f));
+        grayout.ClickOut += ClickOut;
+    }
+
+    IEnumerator Defocus()
+    {
+        grayout.ClickOut -= ClickOut;
+        yield return StartCoroutine(HideOptions(.25f));
+        yield return StartCoroutine(rectUtil.AnimateToStartSize(.25f));
+        yield return StartCoroutine(grayout.Hide());
+        rectUtil.RestoreParent();
+        focused = false;
     }
 
     IEnumerator ShowOptions(float time = 1f)
     {
+        if(panel.GetHiddenLayerCount() > 1)
+        {
+            deleteButton.SetActive(true);
+        } else
+        {
+            deleteButton.SetActive(false);
+        }
+
         Vector2 startPos = title.rectTransform.anchoredPosition;
         Vector2 tarPos = new Vector2(0f, 128f);
         float t = 0f;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class RectUtil : MonoBehaviour {
 
     Grayout grayout;
@@ -9,6 +10,7 @@ public class RectUtil : MonoBehaviour {
     Transform canvas;
     RectTransform rect;
     Vector2 baseSize;
+    CanvasGroup canvasGroup;
 
     void Awake()
     {
@@ -16,6 +18,7 @@ public class RectUtil : MonoBehaviour {
         originalParent = transform.parent;
         canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
         rect = transform as RectTransform;
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     /// <summary>
@@ -43,6 +46,7 @@ public class RectUtil : MonoBehaviour {
     /// <returns></returns>
     public IEnumerator AnimatedResize(Vector2 targetSize, float time = 1f)
     {
+        canvasGroup.blocksRaycasts = false;
         baseSize = rect.sizeDelta;
         float t = 0f;
         while (t < 1f)
@@ -52,6 +56,7 @@ public class RectUtil : MonoBehaviour {
             rect.sizeDelta = Vector2.Lerp(baseSize, targetSize, v);
             yield return null;
         }
+        canvasGroup.blocksRaycasts = true;
     }
 
     /// <summary>
@@ -61,6 +66,7 @@ public class RectUtil : MonoBehaviour {
     /// <returns></returns>
     public IEnumerator AnimateToStartSize(float time = 1f)
     {
+        canvasGroup.blocksRaycasts = false;
         Vector2 startSize = rect.sizeDelta;
         float t = 0f;
         while(t < 1f)
@@ -70,5 +76,6 @@ public class RectUtil : MonoBehaviour {
             rect.sizeDelta = Vector2.Lerp(startSize, baseSize, v);
             yield return null;
         }
+        canvasGroup.blocksRaycasts = true;
     }
 }

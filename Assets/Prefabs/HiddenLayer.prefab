@@ -873,6 +873,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: {fileID: 114946298231604046}
   options: {fileID: 225404291962078996}
+  deleteButton: {fileID: 1466881141150420}
 --- !u!114 &114892374732574070
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114535032937897474}
   - component: {fileID: 114823486446041542}
   - component: {fileID: 114859989144799692}
+  - component: {fileID: 225595758540298166}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -300,9 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fed32f4f2ed4a604d86380452244e499, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overlay: {fileID: 1795675199568308}
   centerText: {fileID: 114560783234321184}
-  resizeButton: {fileID: 1549533210864398}
   main: {fileID: 224135451936945332}
 --- !u!114 &114909642000845766
 MonoBehaviour:
@@ -440,3 +439,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0.00012207031, y: -0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225595758540298166
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1134225550320416}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
