@@ -28,23 +28,4 @@ public class Panel : MonoBehaviour, ISelectHandler
     {
         transform.SetAsLastSibling();
     }
-
-    /// <summary>
-    /// Sinusoidal animated resize of panel to target size over time
-    /// </summary>
-    /// <param name="targetSize">The new size to set the panel to</param>
-    /// <param name="time">Time taken to resize</param>
-    /// <returns></returns>
-    public IEnumerator AnimatedResize(Vector2 targetSize, float time)
-    {
-        Vector2 startSize = rect.sizeDelta;
-        float t = 0f;
-        while (t < 1f)
-        {
-            t += Time.deltaTime / time;
-            float v = Mathf.Sin(Mathf.PI * t / 2f);
-            rect.sizeDelta = Vector2.Lerp(startSize, targetSize, v);
-            yield return null;
-        }
-    }
 }

@@ -32,7 +32,7 @@ public class DeepLearningPanel : Panel
     {
         droppable.enabled = false;
         centerText.enabled = false;
-        yield return StartCoroutine(AnimatedResize(FullSize, .25f));
+        yield return StartCoroutine(GetComponent<RectUtil>().AnimatedResize(FullSize, .25f));
         yield return StartCoroutine(GameObject.FindGameObjectWithTag("Background").GetComponent<Panning>().PanToPanel(rect, .25f));
         InitializeSubpanels(attr);
     }

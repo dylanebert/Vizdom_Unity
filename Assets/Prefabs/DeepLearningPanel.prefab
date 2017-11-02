@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114823486446041542}
   - component: {fileID: 114588771167058498}
   - component: {fileID: 114936599868324742}
+  - component: {fileID: 114427901617076436}
   m_Layer: 5
   m_Name: DeepLearningPanel
   m_TagString: Untagged
@@ -110,6 +111,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114427901617076436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1134225550320416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2301ca21e1f643a4b860955af775b6be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114535032937897474
 MonoBehaviour:
   m_ObjectHideFlags: 1

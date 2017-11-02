@@ -112,6 +112,7 @@
     <Compile Include="Assets\Scripts\Panels\DeepLearningOutputSubpanel.cs" />
     <Compile Include="Assets\Scripts\Panels\DeepLearningPanel.cs" />
     <Compile Include="Assets\Scripts\Panels\HiddenLayer.cs" />
+    <Compile Include="Assets\Scripts\Panels\HiddenLayerSizeSlider.cs" />
     <Compile Include="Assets\Scripts\Panels\InputFeatureBox.cs" />
     <Compile Include="Assets\Scripts\Panels\Panel.cs" />
     <Compile Include="Assets\Scripts\Panels\Subpanel.cs" />
@@ -119,9 +120,11 @@
     <Compile Include="Assets\Scripts\Util\Draggable.cs" />
     <Compile Include="Assets\Scripts\Util\Droppable.cs" />
     <Compile Include="Assets\Scripts\Util\FadeIn.cs" />
+    <Compile Include="Assets\Scripts\Util\Grayout.cs" />
     <Compile Include="Assets\Scripts\Util\Palette.cs" />
     <Compile Include="Assets\Scripts\Util\PanelResize.cs" />
     <Compile Include="Assets\Scripts\Util\Panning.cs" />
+    <Compile Include="Assets\Scripts\Util\RectUtil.cs" />
     <Compile Include="Assets\Scripts\Util\Zoom.cs" />
   </ItemGroup>
   <ItemGroup>

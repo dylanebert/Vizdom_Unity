@@ -37,12 +37,13 @@ public class DeepLearningLayersSubpanel : Subpanel {
         HiddenLayer hiddenLayer = Instantiate(hiddenLayerObj, this.transform).GetComponent<HiddenLayer>();
         hiddenLayers.Insert(index, hiddenLayer);
         hiddenLayer.enabled = false;
+        hiddenLayer.Initialize(this);
 
         //Enlarge panel if more hidden layers than 1
         if (hiddenLayers.Count > 1)
         {
             RectTransform parentPanel = transform.parent.parent as RectTransform;
-            StartCoroutine(parentPanel.GetComponent<Panel>().AnimatedResize(parentPanel.sizeDelta + Vector2.right * HiddenLayerStep, .5f));
+            StartCoroutine(parentPanel.GetComponent<RectUtil>().AnimatedResize(parentPanel.sizeDelta + Vector2.right * HiddenLayerStep, .5f));
         }
 
         //Place new layer at the indicated index
@@ -91,6 +92,16 @@ public class DeepLearningLayersSubpanel : Subpanel {
         yield return StartCoroutine(DrawConnections());
     }
 
+    public IEnumerator RemoveHiddenLayer(HiddenLayer hiddenLayer)
+    {
+        ClearConnections();
+
+        hiddenLayers.Remove(hiddenLayer);
+        Destroy(hiddenLayer.gameObject);
+
+        yield return StartCoroutine(DrawConnections());
+    }
+
     void ClearConnections()
     {
         Stack<Connection> connectionStack = new Stack<Connection>(connections);
@@ -112,6 +123,9 @@ public class DeepLearningLayersSubpanel : Subpanel {
         }
 
         for (int i = 0; i < connections.Count; i++)
+        {
             connections[i].Initialize(this, i);
+            connections[i].transform.SetAsFirstSibling();
+        }
     }
 }

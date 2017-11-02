@@ -8,6 +8,7 @@ TagManager:
   - Container
   - Client
   - Background
+  - Grayout
   layers:
   - Default
   - TransparentFX
