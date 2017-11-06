@@ -54,9 +54,9 @@ public class HiddenLayer : MonoBehaviour, IPointerClickHandler
     {
         focused = true;
         rectUtil.MoveToForeground();
-        yield return StartCoroutine(grayout.Show());
-        yield return StartCoroutine(rectUtil.AnimatedResize(new Vector2(256, -256), .5f));
-        yield return StartCoroutine(ShowOptions(.5f));
+        StartCoroutine(grayout.Show());
+        yield return StartCoroutine(rectUtil.AnimatedResize(new Vector2(256, -256), .25f));
+        yield return StartCoroutine(ShowOptions(.25f));
         grayout.ClickOut += ClickOut;
     }
 
