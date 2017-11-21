@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1134225550320416, guid: f28d45f35707bb14a9466162600dd35e, type: 2}
+  preventDrop: 0
 --- !u!114 &114598875310163832
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -83,7 +84,7 @@ MonoBehaviour:
     m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 2
+    m_MinSize: 12
     m_MaxSize: 49
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -91,7 +92,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: '
+
+'
 --- !u!114 &114999864271794086
 MonoBehaviour:
   m_ObjectHideFlags: 1

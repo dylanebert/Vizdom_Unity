@@ -16,6 +16,7 @@ public class Client : MonoBehaviour {
     {
         yield return StartCoroutine(GetAttributes());
         PopulateMenu();
+
     }
 
     //Populate side menu with attributes from server
@@ -27,10 +28,15 @@ public class Client : MonoBehaviour {
         }
     }
 
+    IEnumerator DeepLearning()
+    {
+        UnityWebRequest www = UnityWebRequest.Get("http://127.0.0.1:5000/");
+    }
+
     //Request list of attributes from server
     IEnumerator GetAttributes()
     {
-        UnityWebRequest www = UnityWebRequest.Get("http://127.0.0.1:5000/data_raw");
+        UnityWebRequest www = UnityWebRequest.Get("http://127.0.0.1:5000/attributes");
         yield return www.Send();
 
         if (www.error != null)
@@ -39,17 +45,11 @@ public class Client : MonoBehaviour {
         {
             attributes = new List<string>();
             string json = www.downloadHandler.text;
-            string[] json_split = json.Split('\n');
-            foreach(string s in json_split)
+            JSONArray attributeArray = JSON.Parse(json).AsArray;
+            foreach(JSONNode attribute in attributeArray)
             {
-                JSONObject jsonObj = JSON.Parse(s).AsObject;
-                foreach(string key in jsonObj.Keys)
-                {
-                    if(!attributes.Contains(key))
-                    {
-                        attributes.Add(key);
-                    }
-                }
+                Debug.Log(attribute.Value);
+                attributes.Add(attribute.Value);
             }
         }
     }
