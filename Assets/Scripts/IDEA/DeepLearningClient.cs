@@ -5,6 +5,9 @@ using System.Net.Sockets;
 
 public class DeepLearningClient : MonoBehaviour {
 
+    public delegate void AccuracyDelegate(float accuracy);
+    public AccuracyDelegate accuracyDelegate;
+
     NetworkStream netStream;
 
     public void Initialize(NetworkStream netStream)
@@ -21,7 +24,7 @@ public class DeepLearningClient : MonoBehaviour {
         string responseData = "";
         netStream.Write(data, 0, data.Length);
 
-        Debug.Log("Accuracy before training: " + GetDeepLearningAccuracy());
+        ReportDeepLearningAccuracy();
 
         Debug.Log("Begin training...");
         for (int i = 0; i < 1000; i++)
@@ -33,15 +36,21 @@ public class DeepLearningClient : MonoBehaviour {
             bytes = netStream.Read(data, 0, data.Length);
             responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
             float loss = float.Parse(responseData);
-            Debug.Log(loss);
+            //Debug.Log(loss);
+
+            if (i % 10 == 0)
+            {
+                ReportDeepLearningAccuracy();
+            }
+
             yield return null;
         }
-        Debug.Log("Finished training");
+        Debug.Log("Finished");
 
-        Debug.Log("Accuracy after training: " + GetDeepLearningAccuracy());
+        ReportDeepLearningAccuracy();
     }
 
-    float GetDeepLearningAccuracy()
+    void ReportDeepLearningAccuracy()
     {
         byte[] data = System.Text.Encoding.UTF8.GetBytes("na");
         netStream.Write(data, 0, data.Length);
@@ -49,7 +58,7 @@ public class DeepLearningClient : MonoBehaviour {
         int bytes = netStream.Read(data, 0, data.Length);
         string responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
         float accuracy = float.Parse(responseData);
-        return accuracy;
+        accuracyDelegate(accuracy);
     }
 }
 

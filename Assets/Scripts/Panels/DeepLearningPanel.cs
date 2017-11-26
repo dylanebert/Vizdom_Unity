@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*Parent panel for deep learning
  * Functionality embedded in subpanels*/
@@ -13,12 +14,19 @@ public class DeepLearningPanel : Panel
     public GameObject layersSubpanelObj;
     public GameObject outputSubpanelObj;
     public GameObject topSubpanelObj;
+    public GameObject overlay;
+    public Sprite playSprite;
+    public Sprite stopSprite;
 
     [HideInInspector]
     public int batchSize = 100;
+    [HideInInspector]
+    public Client client;
 
+    List<RectUtil> overTrainingFocus;
+    Image trainPlayButtonImage;
     Droppable droppable;
-    Client client;
+    bool training;
 
     public override void Awake()
     {
@@ -27,6 +35,7 @@ public class DeepLearningPanel : Panel
         droppable.dropDelegate += OnDrop;
 
         client = GameObject.FindGameObjectWithTag("Client").GetComponent<Client>();
+        overTrainingFocus = new List<RectUtil>();
     }
 
     public void OnDrop(DataMenuItem itemOver)
@@ -50,11 +59,40 @@ public class DeepLearningPanel : Panel
         Instantiate(outputSubpanelObj, main).GetComponent<DeepLearningOutputSubpanel>().Initialize(attr);
         DeepLearningTopSubpanel topSubpanel = Instantiate(topSubpanelObj, main).GetComponent<DeepLearningTopSubpanel>();
         topSubpanel.Initialize(this);
+        overTrainingFocus.Add(topSubpanel.playButtonContainer.GetComponent<RectUtil>());
+        overTrainingFocus.Add(topSubpanel.accuracyContainer.GetComponent<RectUtil>());
+        trainPlayButtonImage = topSubpanel.playButtonImage;
     }
 
     public IEnumerator Train()
     {
+        if (training)
+            yield break;
         NeuralNetworkProperties properties = new NeuralNetworkProperties(batchSize);
+        FocusTraining();
         yield return StartCoroutine(client.deepLearningClient.DeepLearning(properties));
+        DefocusTraining();
+    }
+
+    void FocusTraining()
+    {
+        training = true;
+        overlay.SetActive(true);
+        foreach(RectUtil rectUtil in overTrainingFocus)
+        {
+            rectUtil.MoveToForeground(this.transform);
+        }
+        trainPlayButtonImage.sprite = stopSprite;
+    }
+
+    void DefocusTraining()
+    {
+        overlay.SetActive(false);
+        foreach (RectUtil rectUtil in overTrainingFocus)
+        {
+            rectUtil.RestoreParent();
+        }
+        training = false;
+        trainPlayButtonImage.sprite = playSprite;
     }
 }

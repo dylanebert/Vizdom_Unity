@@ -204,6 +204,11 @@ MonoBehaviour:
     type: 2}
   topSubpanelObj: {fileID: 1930195225131792, guid: ea456321f8abeb247a177804d51cebde,
     type: 2}
+  overlay: {fileID: 1264879372745000}
+  playSprite: {fileID: 21300000, guid: 879b680d36555ee4a9ad53d29ea4bc2e, type: 3}
+  stopSprite: {fileID: 21300000, guid: 93ff61b364912984898d5b65ab9677cb, type: 3}
+  batchSize: 100
+  client: {fileID: 0}
 --- !u!114 &114774024666393386
 MonoBehaviour:
   m_ObjectHideFlags: 1

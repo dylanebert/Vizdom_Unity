@@ -24,9 +24,11 @@ public class RectUtil : MonoBehaviour {
     /// <summary>
     /// Move rect to foreground of canvas
     /// </summary>
-    public void MoveToForeground()
+    public void MoveToForeground(Transform parent = null)
     {
-        transform.SetParent(canvas);
+        if (parent == null)
+            parent = canvas;
+        transform.SetParent(parent);
         transform.SetAsLastSibling();
     }
 

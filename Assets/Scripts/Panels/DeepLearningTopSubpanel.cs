@@ -6,18 +6,33 @@ using UnityEngine.EventSystems;
 
 public class DeepLearningTopSubpanel : Subpanel {
 
+    public GameObject playButtonContainer;
+    public GameObject accuracyContainer;
+    public Image playButtonImage;
     public Text batchSizeText;
+    public Text accuracyText;
 
     DeepLearningPanel panel;
 
     public void Initialize(DeepLearningPanel panel)
     {
         this.panel = panel;
+        panel.client.deepLearningClient.accuracyDelegate += UpdateAccuracy;
     }
 
     private void OnGUI()
     {
         batchSizeText.text = panel.batchSize.ToString();
+    }
+
+    private void OnDestroy()
+    {
+        panel.client.deepLearningClient.accuracyDelegate -= UpdateAccuracy;
+    }
+
+    public void UpdateAccuracy(float accuracy)
+    {
+        accuracyText.text = accuracy.ToString(".000");
     }
 
     public void Play()
