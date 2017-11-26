@@ -1,24 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class DeepLearningTopSubpanel : Subpanel {
 
-   Client client;
+    public Text batchSizeText;
 
-    private void Awake()
+    DeepLearningPanel panel;
+
+    public void Initialize(DeepLearningPanel panel)
     {
-        client = GameObject.FindGameObjectWithTag("Client").GetComponent<Client>();
+        this.panel = panel;
+    }
+
+    private void OnGUI()
+    {
+        batchSizeText.text = panel.batchSize.ToString();
     }
 
     public void Play()
     {
-        StartCoroutine(PlayCoroutine());
+        StartCoroutine(panel.Train());
+    }    
+
+    public void IncreaseBatchSize()
+    {
+        panel.batchSize++;
     }
 
-    IEnumerator PlayCoroutine()
+    public void DecreaseBatchSize()
     {
-        yield return null;
-        //yield return StartCoroutine(client.DeepLearning());
+        panel.batchSize = Mathf.Max(1, panel.batchSize - 1);
+    }
+
+    public void DragBatchSize(BaseEventData eventData)
+    {
+        PointerEventData pointerEventData = eventData as PointerEventData;
+        panel.batchSize = Mathf.Max(1, Mathf.RoundToInt(panel.batchSize + pointerEventData.delta.x));
     }
 }

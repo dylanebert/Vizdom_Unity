@@ -14,13 +14,19 @@ public class DeepLearningPanel : Panel
     public GameObject outputSubpanelObj;
     public GameObject topSubpanelObj;
 
+    [HideInInspector]
+    public int batchSize = 100;
+
     Droppable droppable;
+    Client client;
 
     public override void Awake()
     {
         base.Awake();
         droppable = GetComponent<Droppable>();
         droppable.dropDelegate += OnDrop;
+
+        client = GameObject.FindGameObjectWithTag("Client").GetComponent<Client>();
     }
 
     public void OnDrop(DataMenuItem itemOver)
@@ -42,6 +48,13 @@ public class DeepLearningPanel : Panel
         Instantiate(inputSubpanelObj, main);
         Instantiate(layersSubpanelObj, main);
         Instantiate(outputSubpanelObj, main).GetComponent<DeepLearningOutputSubpanel>().Initialize(attr);
-        Instantiate(topSubpanelObj, main);
+        DeepLearningTopSubpanel topSubpanel = Instantiate(topSubpanelObj, main).GetComponent<DeepLearningTopSubpanel>();
+        topSubpanel.Initialize(this);
+    }
+
+    public IEnumerator Train()
+    {
+        NeuralNetworkProperties properties = new NeuralNetworkProperties(batchSize);
+        yield return StartCoroutine(client.deepLearningClient.DeepLearning(properties));
     }
 }

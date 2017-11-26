@@ -96,6 +96,7 @@
     <Compile Include="Assets\Demo\Scripts\ShowSliderValue.cs" />
     <Compile Include="Assets\Demo\Scripts\TiltWindow.cs" />
     <Compile Include="Assets\Scripts\IDEA\Client.cs" />
+    <Compile Include="Assets\Scripts\IDEA\DeepLearningClient.cs" />
     <Compile Include="Assets\Scripts\Menus\CollapseMenu.cs" />
     <Compile Include="Assets\Scripts\Menus\DataMenuItem.cs" />
     <Compile Include="Assets\Scripts\Menus\MenuItem.cs" />

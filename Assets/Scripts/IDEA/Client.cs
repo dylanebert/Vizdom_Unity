@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
-using System.Net;
 using System.Net.Sockets;
-using System.IO;
 
 /*Communicates with server (IDEA)*/
 public class Client : MonoBehaviour {
 
     public CollapseMenu menu;
+    public DeepLearningClient deepLearningClient;
 
     static string Host = "127.0.0.1";
     static int Port = 8000;
@@ -26,6 +25,7 @@ public class Client : MonoBehaviour {
             tcpSocket = new TcpClient(Host, Port);
             netStream = tcpSocket.GetStream();
             socketReady = true;
+            deepLearningClient.Initialize(netStream);
             GetAttributes();
         } catch(System.Exception e)
         {
