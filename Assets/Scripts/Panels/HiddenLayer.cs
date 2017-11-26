@@ -87,8 +87,9 @@ public class HiddenLayer : MonoBehaviour, IPointerClickHandler
         {
             t += Time.deltaTime / time;
             float v = Mathf.Sin(Mathf.PI * t / 2f);
+            float w = 1f - Mathf.Sin(Mathf.PI * (1f - t) / 2f);
             title.rectTransform.anchoredPosition = Vector2.Lerp(startPos, tarPos, v);
-            options.alpha = t;
+            options.alpha = w;
             yield return null;
         }
         options.alpha = 1;
@@ -104,8 +105,9 @@ public class HiddenLayer : MonoBehaviour, IPointerClickHandler
         {
             t += Time.deltaTime / time;
             float v = Mathf.Sin(Mathf.PI * (1 - t) / 2f);
+            float w = 1f - Mathf.Sin(Mathf.PI * t / 2f);
             title.rectTransform.anchoredPosition = Vector2.Lerp(tarPos, startPos, v);
-            options.alpha = 1 - t;
+            options.alpha = w;
             yield return null;
         }
         options.alpha = 0;

@@ -105,6 +105,7 @@
     <Compile Include="Assets\Scripts\Panels\DeepLearningLayersSubpanel.cs" />
     <Compile Include="Assets\Scripts\Panels\DeepLearningOutputSubpanel.cs" />
     <Compile Include="Assets\Scripts\Panels\DeepLearningPanel.cs" />
+    <Compile Include="Assets\Scripts\Panels\DeepLearningTopSubpanel.cs" />
     <Compile Include="Assets\Scripts\Panels\HiddenLayer.cs" />
     <Compile Include="Assets\Scripts\Panels\HiddenLayerSizeSlider.cs" />
     <Compile Include="Assets\Scripts\Panels\InputFeatureBox.cs" />

@@ -1,56 +1,80 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 using SimpleJSON;
-using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.IO;
 
 /*Communicates with server (IDEA)*/
 public class Client : MonoBehaviour {
 
     public CollapseMenu menu;
 
-    List<string> attributes;
+    static string Host = "127.0.0.1";
+    static int Port = 8000;
 
-    IEnumerator Start()
+    TcpClient tcpSocket;
+    NetworkStream netStream;
+    
+    bool socketReady;
+
+    private void Start()
     {
-        yield return StartCoroutine(GetAttributes());
-        PopulateMenu();
-
-    }
-
-    //Populate side menu with attributes from server
-    void PopulateMenu()
-    {
-        foreach (string attribute in attributes)
+        try
         {
-            menu.AddDataMenuItem(attribute);
+            tcpSocket = new TcpClient(Host, Port);
+            netStream = tcpSocket.GetStream();
+            socketReady = true;
+            GetAttributes();
+        } catch(System.Exception e)
+        {
+            Debug.Log(e);
         }
     }
 
-    IEnumerator DeepLearning()
+    public void GetAttributes()
     {
-        UnityWebRequest www = UnityWebRequest.Get("http://127.0.0.1:5000/");
-    }
+        if (!socketReady) return;
 
-    //Request list of attributes from server
-    IEnumerator GetAttributes()
-    {
-        UnityWebRequest www = UnityWebRequest.Get("http://127.0.0.1:5000/attributes");
-        yield return www.Send();
-
-        if (www.error != null)
-            Debug.Log(www.error);
-        else
+        try
         {
-            attributes = new List<string>();
-            string json = www.downloadHandler.text;
-            JSONArray attributeArray = JSON.Parse(json).AsArray;
-            foreach(JSONNode attribute in attributeArray)
+            Debug.Log("Fetching attributes...");
+
+            byte[] data = System.Text.Encoding.ASCII.GetBytes("ga");
+            netStream.Write(data, 0, data.Length);
+
+            data = new byte[1024];
+            string responseData = "";
+            int bytes = netStream.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+
+            foreach(string attribute in ParseJSONStringArray(responseData))
             {
-                Debug.Log(attribute.Value);
-                attributes.Add(attribute.Value);
+                menu.AddDataMenuItem(attribute);
             }
+
+            Debug.Log("Finished");
         }
+        catch (System.Exception e)
+        {
+            Debug.Log(e);
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        tcpSocket.Close();
+    }
+
+    List<string> ParseJSONStringArray(string json)
+    {
+        List<string> attributes = new List<string>();
+        JSONArray attributeArray = JSON.Parse(json).AsArray;
+        foreach (JSONNode attribute in attributeArray)
+        {
+            attributes.Add(attribute.Value);
+        }
+        return attributes;
     }
 }
