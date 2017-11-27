@@ -19,9 +19,16 @@ public class DeepLearningInputSubpanel : Subpanel {
         inputFeatureBoxes = new List<InputFeatureBox>();
     }
 
-    private void Start()
+    public IEnumerator Initialize(string attr)
+    {
+        yield return StartCoroutine(AddInputFeature(attr));
+        yield return StartCoroutine(AddInputFeature());
+    }
+
+    public void SetAttribute(InputFeatureBox obj, string attr)
     {
         StartCoroutine(AddInputFeature());
+        obj.attributeDelegate -= SetAttribute;
     }
 
     //Create an input feature box and animate downward
@@ -29,9 +36,12 @@ public class DeepLearningInputSubpanel : Subpanel {
     {
         canvasGroup.blocksRaycasts = false;
         InputFeatureBox inputFeatureBox = Instantiate(inputFeatureBoxObj, this.transform).GetComponent<InputFeatureBox>();
-        inputFeatureBox.SetPanel(this);
         if (attr != null)
             inputFeatureBox.Initialize(attr);
+        else
+        {
+            inputFeatureBox.attributeDelegate += SetAttribute;
+        }
         inputFeatureBoxes.Add(inputFeatureBox);
         RectTransform inputFeatureBoxRect = inputFeatureBox.transform as RectTransform;
         CanvasGroup inputFeatureBoxCanvasGroup = inputFeatureBox.GetComponent<CanvasGroup>();
@@ -40,8 +50,9 @@ public class DeepLearningInputSubpanel : Subpanel {
         {
             t += Time.deltaTime * 2f;
             float v = Mathf.Sin(Mathf.PI * t / 2f);
+            float w = 1f - Mathf.Sin(Mathf.PI * (1 - t) / 2f);
             inputFeatureBoxRect.anchoredPosition = Vector2.Lerp(Vector2.down * startY + Vector2.down * (inputFeatureBoxes.Count - 2) * yStep, Vector2.down * startY + Vector2.down * (inputFeatureBoxes.Count - 1) * yStep, v);
-            inputFeatureBoxCanvasGroup.alpha = t;
+            inputFeatureBoxCanvasGroup.alpha = w;
             yield return null;
         }
         inputFeatureBoxCanvasGroup.alpha = 1;

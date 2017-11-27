@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 /*Parent panel for deep learning
  * Functionality embedded in subpanels*/
-[RequireComponent(typeof(Droppable))]
 public class DeepLearningPanel : Panel
 {
     static Vector2 FullSize = new Vector2(576, 384);
@@ -14,7 +13,13 @@ public class DeepLearningPanel : Panel
     public GameObject layersSubpanelObj;
     public GameObject outputSubpanelObj;
     public GameObject topSubpanelObj;
+
     public GameObject overlay;
+    public InputFeatureBox trainingInputBox;
+    public InputFeatureBox trainingAnswerBox;
+    public InputFeatureBox testingInputBox;
+    public InputFeatureBox testingAnswerBox;
+    public Selectable confirmButton;
     public Sprite playSprite;
     public Sprite stopSprite;
 
@@ -25,38 +30,74 @@ public class DeepLearningPanel : Panel
 
     List<RectUtil> overTrainingFocus;
     Image trainPlayButtonImage;
-    Droppable droppable;
+    string trainingInput;
+    string trainingAnswer;
+    string testingInput;
+    string testingAnswer;
     bool training;
 
     public override void Awake()
     {
         base.Awake();
-        droppable = GetComponent<Droppable>();
-        droppable.dropDelegate += OnDrop;
 
         client = GameObject.FindGameObjectWithTag("Client").GetComponent<Client>();
         overTrainingFocus = new List<RectUtil>();
+        trainingInputBox.attributeDelegate += SetAttribute;
+        trainingAnswerBox.attributeDelegate += SetAttribute;
+        testingInputBox.attributeDelegate += SetAttribute;
+        testingAnswerBox.attributeDelegate += SetAttribute;
     }
 
-    public void OnDrop(DataMenuItem itemOver)
+    void SetAttribute(InputFeatureBox obj, string attr)
     {
-        StartCoroutine(InitializeOnAttribute(itemOver.GetAttribute()));
+        switch(obj.flag)
+        {
+            case "train_input":
+                trainingInput = attr;
+                break;
+            case "train_answer":
+                trainingAnswer = attr;
+                break;
+            case "test_input":
+                testingInput = attr;
+                break;
+            case "test_answer":
+                testingAnswer = attr;
+                break;
+            default:
+                break;
+        }
+
+        if (trainingInput == null || trainingAnswer == null)
+        {
+            confirmButton.interactable = false;
+        } else
+        {
+            confirmButton.interactable = true;
+        }
+
+        obj.attributeDelegate -= SetAttribute;
     }
 
-    IEnumerator InitializeOnAttribute(string attr)
+    public void Initialize()
     {
-        droppable.enabled = false;
+        StartCoroutine(InitializeCoroutine());
+    }
+
+    IEnumerator InitializeCoroutine()
+    {
         centerText.enabled = false;
         yield return StartCoroutine(GetComponent<RectUtil>().AnimatedResize(FullSize, .25f));
         yield return StartCoroutine(GameObject.FindGameObjectWithTag("Background").GetComponent<Panning>().PanToPanel(rect, .25f));
-        InitializeSubpanels(attr);
+        InitializeSubpanels();
     }
 
-    void InitializeSubpanels(string attr)
+    void InitializeSubpanels()
     {
-        Instantiate(inputSubpanelObj, main);
+        DeepLearningInputSubpanel inputSubpanel = Instantiate(inputSubpanelObj, main).GetComponent<DeepLearningInputSubpanel>();
+        StartCoroutine(inputSubpanel.Initialize(trainingInput));
         Instantiate(layersSubpanelObj, main);
-        Instantiate(outputSubpanelObj, main).GetComponent<DeepLearningOutputSubpanel>().Initialize(attr);
+        Instantiate(outputSubpanelObj, main).GetComponent<DeepLearningOutputSubpanel>().Initialize(trainingAnswer);
         DeepLearningTopSubpanel topSubpanel = Instantiate(topSubpanelObj, main).GetComponent<DeepLearningTopSubpanel>();
         topSubpanel.Initialize(this);
         overTrainingFocus.Add(topSubpanel.playButtonContainer.GetComponent<RectUtil>());
