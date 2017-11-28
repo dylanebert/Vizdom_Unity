@@ -27,6 +27,8 @@ public class DeepLearningPanel : Panel
     public int batchSize = 100;
     [HideInInspector]
     public Client client;
+    [HideInInspector]
+    public bool training;
 
     List<RectUtil> overTrainingFocus;
     Image trainPlayButtonImage;
@@ -34,7 +36,6 @@ public class DeepLearningPanel : Panel
     string trainingAnswer;
     string testingInput;
     string testingAnswer;
-    bool training;
 
     public override void Awake()
     {
@@ -46,6 +47,10 @@ public class DeepLearningPanel : Panel
         trainingAnswerBox.attributeDelegate += SetAttribute;
         testingInputBox.attributeDelegate += SetAttribute;
         testingAnswerBox.attributeDelegate += SetAttribute;
+        trainingInputBox.resetDelegate += ResetAttribute;
+        trainingAnswerBox.resetDelegate += ResetAttribute;
+        testingInputBox.resetDelegate += ResetAttribute;
+        testingAnswerBox.resetDelegate += ResetAttribute;
     }
 
     void SetAttribute(InputFeatureBox obj, string attr)
@@ -68,15 +73,36 @@ public class DeepLearningPanel : Panel
                 break;
         }
 
-        if (trainingInput == null || trainingAnswer == null)
+        if (trainingInput == null || trainingAnswer == null || testingInput == null || testingAnswer == null)
         {
             confirmButton.interactable = false;
         } else
         {
             confirmButton.interactable = true;
         }
+    }
 
-        obj.attributeDelegate -= SetAttribute;
+    void ResetAttribute(InputFeatureBox obj)
+    {
+        switch (obj.flag)
+        {
+            case "train_input":
+                trainingInput = null;
+                break;
+            case "train_answer":
+                trainingAnswer = null;
+                break;
+            case "test_input":
+                testingInput = null;
+                break;
+            case "test_answer":
+                testingAnswer = null;
+                break;
+            default:
+                break;
+        }
+
+        confirmButton.interactable = false;
     }
 
     public void Initialize()
@@ -109,13 +135,13 @@ public class DeepLearningPanel : Panel
     {
         if (training)
             yield break;
-        NeuralNetworkProperties properties = new NeuralNetworkProperties(batchSize);
+        NeuralNetworkProperties properties = new NeuralNetworkProperties(batchSize, trainingInput, trainingAnswer, testingInput, testingAnswer);
         FocusTraining();
         yield return StartCoroutine(client.deepLearningClient.DeepLearning(properties));
         DefocusTraining();
     }
 
-    void FocusTraining()
+    public void FocusTraining()
     {
         training = true;
         overlay.SetActive(true);
@@ -126,7 +152,7 @@ public class DeepLearningPanel : Panel
         trainPlayButtonImage.sprite = stopSprite;
     }
 
-    void DefocusTraining()
+    public void DefocusTraining()
     {
         overlay.SetActive(false);
         foreach (RectUtil rectUtil in overTrainingFocus)

@@ -22,7 +22,7 @@ public class DeepLearningInputSubpanel : Subpanel {
     public IEnumerator Initialize(string attr)
     {
         yield return StartCoroutine(AddInputFeature(attr));
-        yield return StartCoroutine(AddInputFeature());
+        //yield return StartCoroutine(AddInputFeature());
     }
 
     public void SetAttribute(InputFeatureBox obj, string attr)
@@ -39,9 +39,7 @@ public class DeepLearningInputSubpanel : Subpanel {
         if (attr != null)
             inputFeatureBox.Initialize(attr);
         else
-        {
             inputFeatureBox.attributeDelegate += SetAttribute;
-        }
         inputFeatureBoxes.Add(inputFeatureBox);
         RectTransform inputFeatureBoxRect = inputFeatureBox.transform as RectTransform;
         CanvasGroup inputFeatureBoxCanvasGroup = inputFeatureBox.GetComponent<CanvasGroup>();

@@ -37,7 +37,15 @@ public class DeepLearningTopSubpanel : Subpanel {
 
     public void Play()
     {
-        StartCoroutine(panel.Train());
+        if (panel.training)
+        {
+            panel.DefocusTraining();
+            panel.client.deepLearningClient.CancelDeepLearning();
+        }
+        else
+        {
+            StartCoroutine(panel.Train());
+        }
     }    
 
     public void IncreaseBatchSize()

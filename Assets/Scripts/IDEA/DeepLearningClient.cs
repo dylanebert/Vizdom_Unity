@@ -9,6 +9,7 @@ public class DeepLearningClient : MonoBehaviour {
     public AccuracyDelegate accuracyDelegate;
 
     NetworkStream netStream;
+    bool breakFlag;
 
     public void Initialize(NetworkStream netStream)
     {
@@ -27,8 +28,15 @@ public class DeepLearningClient : MonoBehaviour {
         ReportDeepLearningAccuracy();
 
         Debug.Log("Begin training...");
-        for (int i = 0; i < 1000; i++)
+        int i = 0;
+        while(true)
         {
+            if (breakFlag)
+            {
+                breakFlag = false;
+                break;
+            }
+
             data = System.Text.Encoding.UTF8.GetBytes("nt");
             netStream.Write(data, 0, data.Length);
 
@@ -43,11 +51,17 @@ public class DeepLearningClient : MonoBehaviour {
                 ReportDeepLearningAccuracy();
             }
 
+            i += 1;
             yield return null;
         }
         Debug.Log("Finished");
 
         ReportDeepLearningAccuracy();
+    }
+
+    public void CancelDeepLearning()
+    {
+        breakFlag = true;
     }
 
     void ReportDeepLearningAccuracy()
@@ -66,9 +80,17 @@ public class DeepLearningClient : MonoBehaviour {
 public class NeuralNetworkProperties
 {
     public int batch_size;
+    public string train_input_filename;
+    public string train_answer_filename;
+    public string test_input_filename;
+    public string test_answer_filename;
 
-    public NeuralNetworkProperties(int batchSize = 100)
+    public NeuralNetworkProperties(int batchSize, string trainingInput, string trainingAnswer, string testingInput, string testingAnswer)
     {
         this.batch_size = batchSize;
+        this.train_input_filename = trainingInput;
+        this.train_answer_filename = trainingAnswer;
+        this.test_input_filename = testingInput;
+        this.test_answer_filename = testingAnswer;
     }
 }

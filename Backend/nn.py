@@ -36,8 +36,12 @@ class Model:
 		return float(accuracy_val)
 	
 class Properties:
-	def __init__(self, batch_size):
+	def __init__(self, batch_size, train_input_filename, train_answer_filename, test_input_filename, test_answer_filename):
 		self.batch_size = batch_size
+		self.train_input_filename = train_input_filename
+		self.train_answer_filename = train_answer_filename
+		self.test_input_filename = test_input_filename
+		self.test_answer_filename = test_answer_filename
 	
 if __name__ == '__main__':
 	batch_size = 100
