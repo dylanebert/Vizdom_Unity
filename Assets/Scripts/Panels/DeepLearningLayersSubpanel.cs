@@ -12,12 +12,18 @@ public class DeepLearningLayersSubpanel : Subpanel {
     RectTransform parentPanel;
     List<Connection> connections;
     List<HiddenLayer> hiddenLayers;
+    DeepLearningPanel panel;
 
     private void Awake()
     {
         connections = new List<Connection>();
         hiddenLayers = new List<HiddenLayer>();
         parentPanel = transform.parent.parent as RectTransform;
+    }
+
+    public void Initialize(DeepLearningPanel panel)
+    {
+        this.panel = panel;
     }
 
     private IEnumerator Start()
@@ -90,6 +96,8 @@ public class DeepLearningLayersSubpanel : Subpanel {
 
         hiddenLayer.enabled = true;
 
+        UpdateClient();
+
         yield return StartCoroutine(DrawConnections());
     }
 
@@ -138,6 +146,8 @@ public class DeepLearningLayersSubpanel : Subpanel {
 
         Destroy(hiddenLayer.gameObject);
 
+        UpdateClient();
+
         yield return StartCoroutine(DrawConnections());
     }
 
@@ -173,5 +183,15 @@ public class DeepLearningLayersSubpanel : Subpanel {
     public int GetHiddenLayerCount()
     {
         return hiddenLayers.Count;
+    }
+
+    public void UpdateClient()
+    {
+        List<int> counts = new List<int>();
+        foreach(HiddenLayer hiddenLayer in hiddenLayers)
+        {
+            counts.Add(hiddenLayer.slider.GetHiddenLayerSize());
+        }
+        panel.UpdateHiddenLayerSizes(counts.ToArray());
     }
 }

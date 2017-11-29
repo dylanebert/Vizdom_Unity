@@ -15,8 +15,8 @@ for filename in os.listdir('data'):
 		attributes_to_filenames[attribute] = filename
 attributes = json.dumps(attributes)
 
-def nn_init(batch_size, train_input_filename, train_answer_filename, test_input_filename, test_answer_filename):
-	properties = Properties(batch_size, attributes_to_filenames[train_input_filename], attributes_to_filenames[train_answer_filename], attributes_to_filenames[test_input_filename], attributes_to_filenames[test_answer_filename])
+def nn_init(batch_size, train_input_filename, train_answer_filename, test_input_filename, test_answer_filename, hidden_layer_sizes):
+	properties = Properties(batch_size, attributes_to_filenames[train_input_filename], attributes_to_filenames[train_answer_filename], attributes_to_filenames[test_input_filename], attributes_to_filenames[test_answer_filename], hidden_layer_sizes)
 	
 	global model
 	model = Model(properties)
@@ -56,7 +56,8 @@ while 1:
 		train_answer_filename = data['train_answer_filename']
 		test_input_filename = data['test_input_filename']
 		test_answer_filename = data['test_answer_filename']
-		nn_init(batch_size, train_input_filename, train_answer_filename, test_input_filename, test_answer_filename)
+		hidden_layer_sizes = data['hidden_layer_sizes']
+		nn_init(batch_size, train_input_filename, train_answer_filename, test_input_filename, test_answer_filename, hidden_layer_sizes)
 	elif flag == 'nt': #neural network train
 		loss = nn_train()
 		conn.sendto(str(loss).encode(), (HOST, PORT))

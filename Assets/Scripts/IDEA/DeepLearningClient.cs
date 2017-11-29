@@ -43,7 +43,7 @@ public class DeepLearningClient : MonoBehaviour {
             data = new byte[1024];
             bytes = netStream.Read(data, 0, data.Length);
             responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
-            float loss = float.Parse(responseData);
+            //float loss = float.Parse(responseData);
             //Debug.Log(loss);
 
             if (i % 10 == 0)
@@ -84,13 +84,15 @@ public class NeuralNetworkProperties
     public string train_answer_filename;
     public string test_input_filename;
     public string test_answer_filename;
+    public int[] hidden_layer_sizes;
 
-    public NeuralNetworkProperties(int batchSize, string trainingInput, string trainingAnswer, string testingInput, string testingAnswer)
+    public NeuralNetworkProperties(int batchSize, string trainingInput, string trainingAnswer, string testingInput, string testingAnswer, int[] hiddenLayerSizes)
     {
         this.batch_size = batchSize;
         this.train_input_filename = trainingInput;
         this.train_answer_filename = trainingAnswer;
         this.test_input_filename = testingInput;
         this.test_answer_filename = testingAnswer;
+        this.hidden_layer_sizes = hiddenLayerSizes;
     }
 }

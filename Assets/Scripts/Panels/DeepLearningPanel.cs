@@ -32,6 +32,7 @@ public class DeepLearningPanel : Panel
 
     List<RectUtil> overTrainingFocus;
     Image trainPlayButtonImage;
+    int[] hiddenLayerSizes;
     string trainingInput;
     string trainingAnswer;
     string testingInput;
@@ -122,7 +123,7 @@ public class DeepLearningPanel : Panel
     {
         DeepLearningInputSubpanel inputSubpanel = Instantiate(inputSubpanelObj, main).GetComponent<DeepLearningInputSubpanel>();
         StartCoroutine(inputSubpanel.Initialize(trainingInput));
-        Instantiate(layersSubpanelObj, main);
+        Instantiate(layersSubpanelObj, main).GetComponent<DeepLearningLayersSubpanel>().Initialize(this);
         Instantiate(outputSubpanelObj, main).GetComponent<DeepLearningOutputSubpanel>().Initialize(trainingAnswer);
         DeepLearningTopSubpanel topSubpanel = Instantiate(topSubpanelObj, main).GetComponent<DeepLearningTopSubpanel>();
         topSubpanel.Initialize(this);
@@ -135,7 +136,7 @@ public class DeepLearningPanel : Panel
     {
         if (training)
             yield break;
-        NeuralNetworkProperties properties = new NeuralNetworkProperties(batchSize, trainingInput, trainingAnswer, testingInput, testingAnswer);
+        NeuralNetworkProperties properties = new NeuralNetworkProperties(batchSize, trainingInput, trainingAnswer, testingInput, testingAnswer, hiddenLayerSizes);
         FocusTraining();
         yield return StartCoroutine(client.deepLearningClient.DeepLearning(properties));
         DefocusTraining();
@@ -161,5 +162,10 @@ public class DeepLearningPanel : Panel
         }
         training = false;
         trainPlayButtonImage.sprite = playSprite;
+    }
+
+    public void UpdateHiddenLayerSizes(int[] hiddenLayerSizes)
+    {
+        this.hiddenLayerSizes = hiddenLayerSizes;
     }
 }

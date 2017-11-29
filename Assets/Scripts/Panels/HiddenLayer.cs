@@ -9,6 +9,7 @@ public class HiddenLayer : MonoBehaviour, IPointerClickHandler
     public Text title;
     public CanvasGroup options;
     public GameObject deleteButton;
+    public HiddenLayerSizeSlider slider;
 
     DeepLearningLayersSubpanel panel;
     Grayout grayout;
@@ -68,6 +69,7 @@ public class HiddenLayer : MonoBehaviour, IPointerClickHandler
         yield return StartCoroutine(grayout.Hide());
         rectUtil.RestoreParent();
         focused = false;
+        panel.UpdateClient();
     }
 
     IEnumerator ShowOptions(float time = 1f)
