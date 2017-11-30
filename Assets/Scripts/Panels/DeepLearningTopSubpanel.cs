@@ -44,6 +44,7 @@ public class DeepLearningTopSubpanel : Subpanel {
         }
         else
         {
+            accuracyText.text = "...";
             StartCoroutine(panel.Train());
         }
     }    

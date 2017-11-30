@@ -134,15 +134,13 @@ public class DeepLearningPanel : Panel
 
     public IEnumerator Train()
     {
-        if (training)
-            yield break;
+        yield return StartCoroutine(FocusTraining());
         NeuralNetworkProperties properties = new NeuralNetworkProperties(batchSize, trainingInput, trainingAnswer, testingInput, testingAnswer, hiddenLayerSizes);
-        FocusTraining();
         yield return StartCoroutine(client.deepLearningClient.DeepLearning(properties));
         DefocusTraining();
     }
 
-    public void FocusTraining()
+    public IEnumerator FocusTraining()
     {
         training = true;
         overlay.SetActive(true);
@@ -151,6 +149,7 @@ public class DeepLearningPanel : Panel
             rectUtil.MoveToForeground(this.transform);
         }
         trainPlayButtonImage.sprite = stopSprite;
+        yield return null;
     }
 
     public void DefocusTraining()
